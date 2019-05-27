@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
+from django.urls import path
 from django.contrib.auth.decorators import login_required
 
 from wger.exercises.views import (
@@ -28,89 +29,89 @@ from wger.exercises.views import (
 )
 
 
-
+app_name = "exercises"
 # sub patterns for muscles
 patterns_muscle = [
-    url(r'^overview/$',
+    path('overview/',
         muscles.MuscleListView.as_view(),
         name='overview'),
-    url(r'^admin-overview/$',
+    path('admin-overview/',
         muscles.MuscleAdminListView.as_view(),
         name='admin-list'),
-    url(r'^add/$',
+    path('add/',
         muscles.MuscleAddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit/$',
+    path('<pk>/edit/',
         muscles.MuscleUpdateView.as_view(),
         name='edit'),
-    url(r'^(?P<pk>\d+)/delete/$',
+    path('<pk>/delete/',
         muscles.MuscleDeleteView.as_view(),
         name='delete'),
 ]
 
 # sub patterns for exercise images
 patterns_images = [
-    url(r'^(?P<exercise_pk>\d+)/image/add$',
+    path('<exercise_pk>/image/add',
         images.ExerciseImageAddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit$',
+    path('<pk>/edit',
         images.ExerciseImageEditView.as_view(),
         name='edit'),
-    url(r'^(?P<exercise_pk>\d+)/image/(?P<pk>\d+)/delete$',
+    path('<exercise_pk>/image/<pk>/delete',
         images.ExerciseImageDeleteView.as_view(),
         name='delete'),
-    url(r'^(?P<pk>\d+)/accept/$',
+    path('<pk>/accept/',
         images.accept,
         name='accept'),
-    url(r'^(?P<pk>\d+)/decline/$',
+    path('(<pk>/decline/',
         images.decline,
         name='decline'),
 ]
 
 # sub patterns for exercise comments
 patterns_comment = [
-    url(r'^(?P<exercise_pk>\d+)/comment/add/$',
+    path('<exercise_pk>/comment/add/',
         comments.ExerciseCommentAddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit/$',
+    path('<pk>/edit/',
         comments.ExerciseCommentEditView.as_view(),
         name='edit'),
-    url(r'^(?P<id>\d+)/delete/$',
+    path('<id>/delete/',
         comments.delete,
         name='delete'),
 ]
 
 # sub patterns for categories
 patterns_category = [
-    url(r'^list$',
+    path('list',
         categories.ExerciseCategoryListView.as_view(),
         name='list'),
-    url(r'^(?P<pk>\d+)/edit/$',
+    path('<pk>/edit/',
         categories.ExerciseCategoryUpdateView.as_view(),
         name='edit'),
-    url(r'^add/$',
+    path('add/',
         categories.ExerciseCategoryAddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/delete/$',
+    path('<pk>/delete/',
         categories.ExerciseCategoryDeleteView.as_view(),
         name='delete'),
 ]
 
 # sub patterns for equipment
 patterns_equipment = [
-    url(r'^list$',
+    path('list',
         equipment.EquipmentListView.as_view(),
         name='list'),
-    url(r'^add$',
+    path('add',
         equipment.EquipmentAddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit$',
+    path('<pk>/edit',
         equipment.EquipmentEditView.as_view(),
         name='edit'),
-    url(r'^(?P<pk>\d+)/delete$',
+    path('<pk>/delete',
         equipment.EquipmentDeleteView.as_view(),
         name='delete'),
-    url(r'^overview$',
+    path('overview',
         equipment.EquipmentOverviewView.as_view(),
         name='overview'),
 ]
@@ -118,44 +119,44 @@ patterns_equipment = [
 
 # sub patterns for exercises
 patterns_exercise = [
-    url(r'^overview/$',
+    path('overview/',
         exercises.ExerciseListView.as_view(),
         name='overview'),
-    url(r'^(?P<id>\d+)/view/$',
+    path('<id>/view/',
         exercises.view,
         name='view'),
     url(r'^(?P<id>\d+)/view/(?P<slug>[-\w]*)/?$',
         exercises.view,
-        name='view'),
-    url(r'^add/$',
+        name='view'),      
+    path('add/',
         login_required(exercises.ExerciseAddView.as_view()),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit/$',
+    path('<pk>/edit/',
         exercises.ExerciseUpdateView.as_view(),
         name='edit'),
-    url(r'^(?P<pk>\d+)/correct$',
+    path('<pk>/correct',
         exercises.ExerciseCorrectView.as_view(),
         name='correct'),
-    url(r'^(?P<pk>\d+)/delete/$',
+    path('<pk>/delete/',
         exercises.ExerciseDeleteView.as_view(),
         name='delete'),
-    url(r'^pending/$',
+    path('pending/',
         exercises.PendingExerciseListView.as_view(),
         name='pending'),
-    url(r'^(?P<pk>\d+)/accept/$',
+    path('<pk>/accept/',
         exercises.accept,
         name='accept'),
-    url(r'^(?P<pk>\d+)/decline/$',
+    path('<pk>/decline/',
         exercises.decline,
         name='decline'),
 ]
 
 
 urlpatterns = [
-   url(r'^muscle/', include(patterns_muscle, namespace="muscle")),
-   url(r'^image/', include(patterns_images, namespace="image")),
-   url(r'^comment/', include(patterns_comment, namespace="comment")),
-   url(r'^category/', include(patterns_category, namespace="category")),
-   url(r'^equipment/', include(patterns_equipment, namespace="equipment")),
-   url(r'^', include(patterns_exercise, namespace="exercise")),
+    path('muscle/', include((patterns_muscle, "exercises"), namespace="muscle")),
+    path('image/', include((patterns_images, "exercises"), namespace="image")),
+    path('comment/', include((patterns_comment, "exercises"), namespace="comment")),
+    path('category/', include((patterns_category, "exercises"), namespace="category")),
+    path('equipment/', include((patterns_equipment, "exercises"), namespace="equipment")),
+    path('', include((patterns_exercise, "exercises"), namespace="exercise")),
 ]

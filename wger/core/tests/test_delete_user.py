@@ -15,7 +15,7 @@
 import logging
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from wger.core.tests.base_testcase import WorkoutManagerTestCase
 
@@ -58,7 +58,7 @@ class DeleteUserTestCase(WorkoutManagerTestCase):
         Tests deleting the own account as a logged in user
         '''
         self.user_login('test')
-        self.delete_user(fail=False)
+        self.delete_user()
 
     def test_delete_user_anonymous(self):
         '''

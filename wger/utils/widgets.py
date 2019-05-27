@@ -23,8 +23,9 @@ from django.forms.widgets import (
     Select,
     SelectMultiple,
     TextInput,
-    ChoiceFieldRenderer,
-    CheckboxChoiceInput)
+    # ChoiceFieldRenderer,
+    # CheckboxChoiceInput
+    )
 
 from django.forms import fields
 
@@ -98,7 +99,7 @@ class ExerciseAjaxSelect(SelectMultiple):
     This is basically a modified MultipleSelect widget
     '''
 
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, renderer=None,attrs=None, choices=()):
         if value is None:
             value = []
 
@@ -144,7 +145,7 @@ class ExerciseAjaxSelect(SelectMultiple):
             return ''
 
 
-class CheckboxChoiceInputTranslated(CheckboxChoiceInput):
+class CheckboxChoiceInputTranslated(object):
     '''
     Overwritten CheckboxChoiceInput
 
@@ -158,7 +159,7 @@ class CheckboxChoiceInputTranslated(CheckboxChoiceInput):
         super(CheckboxChoiceInputTranslated, self).__init__(name, value, attrs, choice, index)
 
 
-class CheckboxChoiceInputTranslatedOriginal(CheckboxChoiceInput):
+class CheckboxChoiceInputTranslatedOriginal(object):
     '''
     Overwritten CheckboxChoiceInput
 
@@ -180,11 +181,11 @@ class CheckboxChoiceInputTranslatedOriginal(CheckboxChoiceInput):
                                                                     index)
 
 
-class CheckboxFieldRendererTranslated(ChoiceFieldRenderer):
+class CheckboxFieldRendererTranslated(object):
     choice_input_class = CheckboxChoiceInputTranslated
 
 
-class CheckboxFieldRendererTranslatedOriginal(ChoiceFieldRenderer):
+class CheckboxFieldRendererTranslatedOriginal(object):
     choice_input_class = CheckboxChoiceInputTranslatedOriginal
 
 

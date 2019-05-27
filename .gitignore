@@ -8,6 +8,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+venv-django/
 build/
 develop-eggs/
 dist/
@@ -62,3 +63,6 @@ target/
 # External Libraries 
 wger/core/static/bower_components
 node_modules
+venv/
+venv-django/
+.vscode/

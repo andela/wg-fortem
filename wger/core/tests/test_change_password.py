@@ -15,7 +15,7 @@
 import logging
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from wger.core.tests.base_testcase import WorkoutManagerTestCase
 
@@ -42,7 +42,8 @@ class ChangePasswordTestCase(WorkoutManagerTestCase):
                      'new_password1': 'secret',
                      'new_password2': 'secret'}
 
-        response = self.client.post(reverse('core:user:change-password'), form_data)
+        response = self.client.post(reverse('core:user:change-password'),
+                                    form_data)
         self.assertEqual(response.status_code, 302)
 
         # Check the new password was accepted
