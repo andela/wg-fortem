@@ -32,7 +32,7 @@ from django.views.generic import DeleteView, UpdateView
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import  cm
+from reportlab.lib.units import cm
 from reportlab.platypus import (
     Paragraph,
     SimpleDocTemplate,

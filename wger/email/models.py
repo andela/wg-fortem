@@ -34,7 +34,7 @@ class Log(models.Model):
     '''
 
     user = models.ForeignKey(User,
-                             editable=False,on_delete=models.CASCADE)
+                             editable=False, on_delete=models.CASCADE)
     '''
     The user that created the email
     '''

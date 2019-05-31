@@ -394,8 +394,8 @@ class Ingredient(AbstractLicenseModel, models.Model):
         equal = True
         if isinstance(other, self.__class__):
             for i in self._meta.fields:
-                if (hasattr(self, i.name) and hasattr(other, i.name) and
-                        (getattr(self, i.name, None) != getattr(other, i.name, None))):
+                if (hasattr(self, i.name) and hasattr(other, i.name)
+                   and(getattr(self, i.name, None) != getattr(other, i.name, None))):
                     equal = False
         else:
             equal = False
@@ -640,9 +640,7 @@ class MealItem(models.Model):
         if self.get_unit_type() == MEALITEM_WEIGHT_GRAM:
             item_weight = self.amount
         else:
-            item_weight = (self.amount *
-                           self.weight_unit.amount *
-                           self.weight_unit.gram)
+            item_weight = (self.amount * self.weight_unit.amount * self.weight_unit.gram)
 
         nutritional_info['energy'] += self.ingredient.energy * item_weight / 100
         nutritional_info['protein'] += self.ingredient.protein * item_weight / 100

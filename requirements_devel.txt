@@ -9,3 +9,5 @@
 pycodestyle
 django-debug-toolbar
 coverage
+flake8
+autopep8
