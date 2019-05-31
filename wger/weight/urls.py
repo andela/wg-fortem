@@ -15,39 +15,39 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls import patterns, url
+from django.urls import path
 from django.contrib.auth.decorators import login_required
 
 from wger.weight.forms import WeightCsvImportForm
 from wger.weight import views
 
-
+app_name = "weight"
 urlpatterns = [
-    url(r'^add/$',
-        login_required(views.WeightAddView.as_view()),
-        name='add'),
+    path('add/',
+         login_required(views.WeightAddView.as_view()),
+         name='add'),
 
-    url(r'^(?P<pk>\d+)/edit/$',
+    path('<pk>/edit/',
         login_required(views.WeightUpdateView.as_view()),
         name='edit'),
 
-    url(r'^export-csv/$',
+    path('export-csv/',
         views.export_csv,
         name='export-csv'),
-    url(r'^import-csv/$',
+    path('import-csv/',
         login_required(views.WeightCsvImportFormPreview(WeightCsvImportForm)),
         name='import-csv'),
 
-    url(r'^overview/(?P<username>[\w.@+-]+)$',
+    path('overview/<username>',
         views.overview,
         name='overview'),
     # url(r'^overview/$',
     #     views.overview,
     #     name='overview'),
-    url(r'^api/get_weight_data/(?P<username>[\w.@+-]+)$', # JS
+    path('api/get_weight_data/<username>',  # JS
         views.get_weight_data,
         name='weight-data'),
-    url(r'^api/get_weight_data/$', # JS
+    path('api/get_weight_data/',  # JS
         views.get_weight_data,
         name='weight-data'),
 ]

@@ -12,7 +12,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from wger.core.tests.base_testcase import (
     WorkoutManagerEditTestCase,
@@ -88,6 +88,7 @@ class DeleteContractTypeTestCase(WorkoutManagerDeleteTestCase):
                  'member3',
                  'member4',
                  'member5')
+
 
 delete_testcase_add_methods(DeleteContractTypeTestCase)
 

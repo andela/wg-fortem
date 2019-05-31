@@ -19,8 +19,8 @@ import logging
 import tempfile
 import shutil
 
-from django.core.urlresolvers import reverse
-from django.core.urlresolvers import NoReverseMatch
+from django.urls import reverse
+from django.urls import NoReverseMatch
 from django.core.cache import cache
 from django.conf import settings
 from django.test import TestCase
@@ -249,7 +249,8 @@ class WorkoutManagerDeleteTestCase(WorkoutManagerTestCase):
             self.assertEqual(response.status_code, 200)
 
         # Try deleting the object
-        response = self.client.post(get_reverse(self.url, kwargs={'pk': self.pk}))
+        response = self.client.post(get_reverse(self.url,
+                                                kwargs={'pk': self.pk}))
 
         count_after = self.object_class.objects.count()
 

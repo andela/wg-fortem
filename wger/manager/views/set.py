@@ -19,7 +19,7 @@ import logging
 from django.forms.models import modelformset_factory, inlineformset_factory
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.decorators import login_required
@@ -37,7 +37,7 @@ from wger.manager.forms import (
 )
 from wger.utils.language import load_item_languages
 from wger.config.models import LanguageConfig
-
+from django_mobile import get_flavour
 logger = logging.getLogger(__name__)
 
 
@@ -68,7 +68,7 @@ def create(request, day_pk):
     # The difference is that the mobile form doesn't use the autocompleter for
     # exercises, but 2 dropdowns, one to filter by category and one to select
     # the exercises themselves.
-    if request.flavour == 'mobile':
+    if get_flavour(request, 'full') == 'mobile':
         form_class = SetFormMobile
     else:
         form_class = SetForm
@@ -79,7 +79,7 @@ def create(request, day_pk):
 
     # For the mobile dropdown list we need to manually filter the exercises
     # by language and status
-    if request.flavour == 'mobile':
+    if get_flavour(request, 'full') == 'mobile':
         languages = load_item_languages(LanguageConfig.SHOW_ITEM_EXERCISES)
         form.fields['exercise_list'].queryset = Exercise.objects.accepted() \
                                                         .filter(language__in=languages)
@@ -115,7 +115,7 @@ def create(request, day_pk):
                     instance.save()
 
             return HttpResponseRedirect(reverse('manager:workout:view',
-                                        kwargs={'pk': day.get_owner_object().id}))
+                                                kwargs={'pk': day.get_owner_object().id}))
         else:
             logger.debug(form.errors)
 
@@ -217,7 +217,7 @@ def edit(request, pk):
                         instance.save()
 
             return HttpResponseRedirect(reverse('manager:workout:view',
-                                        kwargs={'pk': set_obj.get_owner_object().id}))
+                                                kwargs={'pk': set_obj.get_owner_object().id}))
 
     # Other context we need
     context = {}

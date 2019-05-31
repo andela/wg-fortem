@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 
 
-from django.conf.urls import (
-    url,
+from django.urls import (
+    path,
     include
 )
 
@@ -33,44 +33,44 @@ from wger.gym.views import (
     export
 )
 
-
+app_name = "gym"
 # 'sub patterns' for gyms
 patterns_gym = [
-    url(r'^list$',
+    path(r'list',
         gym.GymListView.as_view(),
         name='list'),
-    url(r'^new-user-data/view$',
+    path(r'new-user-data/view',
         gym.gym_new_user_info,
         name='new-user-data'),
-    url(r'^new-user-data/export$',
+    path(r'new-user-data/export',
         gym.gym_new_user_info_export,
         name='new-user-data-export'),
-    url(r'^(?P<pk>\d+)/members$',
+    path(r'<pk>/members',
         gym.GymUserListView.as_view(),
         name='user-list'),
-    url(r'^(?P<gym_pk>\d+)/add-member$',
+    path(r'<gym_pk>/add-member',
         gym.GymAddUserView.as_view(),
         name='add-user'),
-    url(r'^add$',
+    path(r'add',
         gym.GymAddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit$',
+    path(r'<pk>/edit',
         gym.GymUpdateView.as_view(),
         name='edit'),
-    url(r'^(?P<pk>\d+)/delete$',
+    path(r'<pk>/delete',
         gym.GymDeleteView.as_view(),
         name='delete'),
-    url(r'^user/(?P<user_pk>\d+)/permission-edit$',
+    path(r'user/<user_pk>/permission-edit',
         gym.gym_permissions_user_edit,
         name='edit-user-permission'),
-    url(r'^user/(?P<user_pk>\d+)/reset-user-password$',
+    path(r'user/<user_pk>/reset-user-password',
         gym.reset_user_password,
         name='reset-user-password'),
 ]
 
 # 'sub patterns' for gym config
 patterns_gymconfig = [
-    url(r'^(?P<pk>\d+)/edit$',
+    path(r'<pk>/edit',
         config.GymConfigUpdateView.as_view(),
         name='edit'),
 ]
@@ -78,101 +78,101 @@ patterns_gymconfig = [
 
 # 'sub patterns' for gym admin config
 patterns_adminconfig = [
-    url(r'^(?P<pk>\d+)/edit$',
+    path(r'<pk>/edit',
         admin_config.ConfigUpdateView.as_view(),
         name='edit'),
 ]
 
 # 'sub patterns' for gym user config
 patterns_userconfig = [
-    url(r'^(?P<pk>\d+)/edit$',
+    path(r'<pk>/edit',
         user_config.ConfigUpdateView.as_view(),
         name='edit'),
 ]
 
 # 'sub patterns' for admin notes
 patterns_admin_notes = [
-    url(r'^list/user/(?P<user_pk>\d+)$',
+    path(r'list/user/<user_pk>',
         admin_notes.ListView.as_view(),
         name='list'),
-    url(r'^add/user/(?P<user_pk>\d+)$',
+    path(r'add/user/<user_pk>',
         admin_notes.AddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit$',
+    path(r'<pk>/edit',
         admin_notes.UpdateView.as_view(),
         name='edit'),
-    url(r'^(?P<pk>\d+)/delete$',
+    path(r'<pk>/delete',
         admin_notes.DeleteView.as_view(),
         name='delete'),
 ]
 
 # 'sub patterns' for user documents
 patterns_documents = [
-    url(r'^list/user/(?P<user_pk>\d+)$',
+    path(r'list/user/<user_pk>',
         document.ListView.as_view(),
         name='list'),
-    url(r'^add/user/(?P<user_pk>\d+)$',
+    path(r'add/user/<user_pk>',
         document.AddView.as_view(),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit$',
+    path(r'<pk>/edit',
         document.UpdateView.as_view(),
         name='edit'),
-    url(r'^(?P<pk>\d+)/delete$',
+    path(r'<pk>/delete',
         document.DeleteView.as_view(),
         name='delete'),
 ]
 
 # sub patterns for contracts
 patterns_contracts = [
-    url(r'^add/(?P<user_pk>\d+)$',
+    path(r'add/<user_pk>',
         contract.AddView.as_view(),
         name='add'),
-    url(r'^view/(?P<pk>\d+)$',
+    path(r'view/<pk>',
         contract.DetailView.as_view(),
         name='view'),
-    url(r'^edit/(?P<pk>\d+)$',
+    path(r'edit/<pk>',
         contract.UpdateView.as_view(),
         name='edit'),
-    url(r'^list/(?P<user_pk>\d+)$',
+    path(r'list/<user_pk>',
         contract.ListView.as_view(),
         name='list'),
 ]
 
 # sub patterns for contract types
 patterns_contract_types = [
-    url(r'^add/(?P<gym_pk>\d+)$',
+    path(r'add/<gym_pk>',
         contract_type.AddView.as_view(),
         name='add'),
-    url(r'^edit/(?P<pk>\d+)$',
+    path(r'edit/<pk>',
         contract_type.UpdateView.as_view(),
         name='edit'),
-    url(r'^delete/(?P<pk>\d+)$',
+    path(r'delete/<pk>',
         contract_type.DeleteView.as_view(),
         name='delete'),
-    url(r'^list/(?P<gym_pk>\d+)$',
+    path(r'list/<gym_pk>',
         contract_type.ListView.as_view(),
         name='list'),
 ]
 
 # sub patterns for contract options
 patterns_contract_options = [
-    url(r'^add/(?P<gym_pk>\d+)$',
+    path(r'add/<gym_pk>',
         contract_option.AddView.as_view(),
         name='add'),
-    url(r'^edit/(?P<pk>\d+)$',
+    path(r'edit/<pk>',
         contract_option.UpdateView.as_view(),
         name='edit'),
-    url(r'^delete/(?P<pk>\d+)$',
+    path(r'delete/<pk>',
         contract_option.DeleteView.as_view(),
         name='delete'),
-    url(r'^list/(?P<gym_pk>\d+)$',
+    path(r'list/<gym_pk>',
         contract_option.ListView.as_view(),
         name='list'),
 ]
 
 # sub patterns for exports
 patterns_export = [
-    url(r'^users/(?P<gym_pk>\d+)$',
+    path(r'users/<gym_pk>',
         export.users,
         name='users'),
 ]
@@ -180,15 +180,17 @@ patterns_export = [
 #
 # All patterns for this app
 #
+
 urlpatterns = [
-    url(r'^', include(patterns_gym, namespace="gym")),
-    url(r'^config/', include(patterns_gymconfig, namespace="config")),
-    url(r'^admin-config/', include(patterns_adminconfig, namespace="admin_config")),
-    url(r'^user-config/', include(patterns_userconfig, namespace="user_config")),
-    url(r'^notes/', include(patterns_admin_notes, namespace="admin_note")),
-    url(r'^document/', include(patterns_documents, namespace="document")),
-    url(r'^contract/', include(patterns_contracts, namespace="contract")),
-    url(r'^contract-type/', include(patterns_contract_types, namespace="contract_type")),
-    url(r'^contract-option/', include(patterns_contract_options, namespace="contract-option")),
-    url(r'^export/', include(patterns_export, namespace="export")),
+    path(r'', include((patterns_gym, "gym"), namespace="gym")),
+    path(r'config/', include((patterns_gymconfig, "config"), namespace="config")),
+    path(r'admin-config/', include((patterns_adminconfig, "admin_config"), namespace="admin_config")),
+    path(r'user-config/', include((patterns_userconfig, "user_config"), namespace="user_config")),
+    path(r'notes/', include((patterns_admin_notes, "admin_note"), namespace="admin_note")),
+    path(r'document/', include((patterns_documents, "document"), namespace="document")),
+    path(r'contract/', include((patterns_contracts, "contract"), namespace="contract")),
+    path(r'contract-type/', include((patterns_contract_types, "contract_type"), namespace="contract_type")),
+    path(r'contract-option/', include((patterns_contract_options,
+                                       "contract-option"), namespace="contract-option")),
+    path(r'export/', include((patterns_export, "export"), namespace="export")),
 ]

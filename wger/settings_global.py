@@ -26,6 +26,7 @@ For a full list of options, visit:
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 #
@@ -102,7 +103,25 @@ BOWER_INSTALLED_APPS = (
     'devbridge-autocomplete#1.2.x',
     'sortablejs#1.4.x',
 )
+MIDDLEWARE = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 
+    # Javascript Header. Sends helper headers for AJAX
+    'wger.utils.middleware.JavascriptAJAXRedirectionMiddleware',
+
+    # Custom authentication middleware. Creates users on-the-fly for certain paths
+    'wger.utils.middleware.WgerAuthenticationMiddleware',
+
+    # Send an appropriate Header so search engines don't index pages
+    'wger.utils.middleware.RobotsExclusionMiddleware'
+
+
+
+)
 
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
@@ -112,7 +131,6 @@ MIDDLEWARE_CLASSES = (
 
     # Javascript Header. Sends helper headers for AJAX
     'wger.utils.middleware.JavascriptAJAXRedirectionMiddleware',
-
     # Custom authentication middleware. Creates users on-the-fly for certain paths
     'wger.utils.middleware.WgerAuthenticationMiddleware',
 
@@ -136,8 +154,9 @@ AUTHENTICATION_BACKENDS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
+
             'context_processors': [
                 'wger.utils.context_processor.processor',
 
@@ -152,9 +171,8 @@ TEMPLATES = [
 
                 # Django mobile
                 'django_mobile.context_processors.flavour',
-
                 # Breadcrumbs
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
             ],
             'loaders': [
                 # Django mobile
@@ -163,11 +181,16 @@ TEMPLATES = [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
-            'debug': False
+            'debug': True
         },
     },
 ]
 
+TEMPLATE_LOADERS = (
+    ('django_mobile.loader.CachedLoader', (
+        'django_mobile.loader.Loader',
+    )),
+)
 # Store the user messages in the session
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
@@ -210,7 +233,7 @@ USE_L10N = True
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = None
+TIME_ZONE = "Africa/Nairobi"
 
 # Restrict the available languages
 LANGUAGES = (
@@ -339,7 +362,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',
                                 'rest_framework.filters.OrderingFilter',)
 }
 

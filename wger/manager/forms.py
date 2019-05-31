@@ -19,6 +19,7 @@ This file contains forms used in the application
 '''
 
 from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 from django.utils.translation import ugettext as _
 from django.forms import (
@@ -59,7 +60,7 @@ from wger.utils.widgets import Html5DateInput
 
 
 class DemoUserForm(Form):
-    captcha = ReCaptchaField(attrs={'theme': 'clean'},
+    captcha = ReCaptchaField(widget = ReCaptchaV2Checkbox(attrs={'theme': 'clean'}),
                              label=_('Confirmation text'),
                              help_text=_('As a security measure, please enter the previous words'),)
 

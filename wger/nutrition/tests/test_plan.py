@@ -1,3 +1,4 @@
+
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -13,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from wger.core.tests import api_base_test
 from wger.core.tests.base_testcase import WorkoutManagerDeleteTestCase
@@ -127,6 +128,7 @@ class PlanDailyCaloriesTestCase(WorkoutManagerTestCase):
     '''
     Tests the handling of the daily calories in the plan page
     '''
+
     def test_overview_no_calories(self):
         '''
         Tests the overview page with no daily calories set

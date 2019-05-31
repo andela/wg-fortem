@@ -28,7 +28,10 @@ from django.forms import (
 )
 from django.utils.translation import ugettext as _
 from wger.core.models import UserProfile
+from captcha.widgets import ReCaptchaV2Invisible
 
+class FormWithCaptcha(forms.Form):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
 class UserLoginForm(AuthenticationForm):
     '''
@@ -132,14 +135,14 @@ class RegistrationForm(UserCreationForm, UserEmailForm):
     # randomly one of the application languages. This also appears to happen
     # only on wger.de, perhaps because there the application is behind a reverse
     # proxy. See  #281.
-    captcha = ReCaptchaField(attrs={'theme': 'clean', 'lang': 'en'},
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible(attrs={'theme': 'clean', 'lang': 'en'}),
                              label=_('Confirmation text'),
                              help_text=_('As a security measure, please enter the previous words'))
 
 
 class RegistrationFormNoCaptcha(UserCreationForm, UserEmailForm):
     '''
-    Registration form without captcha field
+    Registration form without captcha fieldx
 
     This is used when registering through an app, in that case there is not
     such a spam danger and simplifies the registration process on a mobile
@@ -170,6 +173,6 @@ class FeedbackAnonymousForm(FeedbackRegisteredForm):
     '''
     Feedback form used for anonymous users (has additionally a reCaptcha field)
     '''
-    captcha = ReCaptchaField(attrs={'theme': 'clean'},
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible(attrs={'theme': 'clean'}),
                              label=_('Confirmation text'),
                              help_text=_('As a security measure, please enter the previous words'),)
