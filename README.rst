@@ -75,11 +75,11 @@ Then install the python packages from pypi in the virtualenv::
  $ git clone https://github.com/wger-project/wger.git
  $ cd wger
  $ pip install -r requirements.txt  # or requirements_devel.txt to develop
- $ invoke create_settings \
-          --settings-path /home/wger/wger/settings.py \
-          --database-path /home/wger/wger/database.sqlite
- $ invoke bootstrap_wger \
-          --settings-path /home/wger/wger/settings.py \
+ $ invoke create-settings \
+          --settings-path /home/wg-fortem/wger/settings.py \
+          --database-path /home/wg-fortem/wger/database.sqlite
+ $ invoke bootstrap-wger \
+          --settings-path /home/wg-fortem/wger/settings.py \
           --no-start-server
  $ python manage.py runserver
 
@@ -153,13 +153,13 @@ The available options for the ``wger`` command (if installed from PyPI) or
 <command>``::
 
 
-  bootstrap_wger          Performs all steps necessary to bootstrap the application
-  config_location         Returns the default location for the settings file and the data folder
-  create_or_reset_admin   Creates an admin user or resets the password for an existing one
-  create_settings         Creates a local settings file
-  load_fixtures           Loads all fixtures
-  migrate_db              Run all database migrations
-  start_wger              Start the application using django's built in webserver
+  bootstrap-wger          Performs all steps necessary to bootstrap the application
+  config-location         Returns the default location for the settings file and the data folder
+  create-or-reset-admin   Creates an admin user or resets the password for an existing one
+  create-settings         Creates a local settings file
+  load-fixtures           Loads all fixtures
+  migrate-db              Run all database migrations
+  start-wger              Start the application using django's built in webserver
 
 Contact
 =======

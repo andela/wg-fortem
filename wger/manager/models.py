@@ -29,7 +29,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 from django.core.cache import cache
 from django.core.validators import MinValueValidator
-from sortedm2m.fields import SortedManyToManyField
 
 from wger.core.models import DaysOfWeek, RepetitionUnit, WeightUnit
 from wger.exercises.models import Exercise

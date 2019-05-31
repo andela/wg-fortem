@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 
 import logging
-import datetime
 
 from django.http import HttpResponse
 from django.http import HttpResponseForbidden
@@ -33,13 +32,9 @@ from reportlab.lib.units import cm
 from reportlab.platypus import (
     Paragraph,
     SimpleDocTemplate,
-    Table,
     Spacer
 )
 
-from reportlab.lib import colors
-
-from wger import get_version
 
 logger = logging.getLogger(__name__)
 

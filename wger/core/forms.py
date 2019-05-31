@@ -30,8 +30,10 @@ from django.utils.translation import ugettext as _
 from wger.core.models import UserProfile
 from captcha.widgets import ReCaptchaV2Invisible
 
+
 class FormWithCaptcha(forms.Form):
     captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
+
 
 class UserLoginForm(AuthenticationForm):
     '''

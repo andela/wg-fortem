@@ -25,7 +25,7 @@ from django.forms.widgets import (
     TextInput,
     # ChoiceFieldRenderer,
     # CheckboxChoiceInput
-    )
+)
 
 from django.forms import fields
 
@@ -99,7 +99,7 @@ class ExerciseAjaxSelect(SelectMultiple):
     This is basically a modified MultipleSelect widget
     '''
 
-    def render(self, name, value, renderer=None,attrs=None, choices=()):
+    def render(self, name, value, renderer=None, attrs=None, choices=()):
         if value is None:
             value = []
 

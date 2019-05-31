@@ -130,7 +130,8 @@ class GymConfig(m.Model):
 
     weeks_inactive = m.PositiveIntegerField(verbose_name=_('Reminder of inactive members'),
                                             help_text=_('Number of weeks since the last time a '
-                                            'user logged his presence to be considered inactive'),
+                                                        'user logged his presence to be '
+                                                        'considered inactive'),
                                             default=4)
     '''
     Reminder of inactive members
@@ -182,7 +183,8 @@ class GymAdminConfig(AbstractGymUserConfigModel, m.Model):
         '''
 
     overview_inactive = m.BooleanField(verbose_name=_('Overview of inactive members'),
-                                       help_text=_('Receive email overviews of inactive members'),
+                                       help_text=_('Receive email overviews of inactive '
+                                                   'members'),
                                        default=True)
     '''
     Reminder of inactive members
@@ -208,7 +210,7 @@ class GymUserConfig(AbstractGymUserConfigModel, m.Model):
 
     include_inactive = m.BooleanField(verbose_name=_('Include in inactive overview'),
                                       help_text=_('Include this user in the email list with '
-                                      'inactive members'),
+                                                  'inactive members'),
                                       default=True)
     '''
     Include user in inactive overview
@@ -235,7 +237,7 @@ class AdminUserNote(m.Model):
 
     user = m.ForeignKey(User,
                         editable=False,
-                        related_name='adminusernote_user',on_delete=m.CASCADE)
+                        related_name='adminusernote_user', on_delete=m.CASCADE)
     '''
     User this note belongs to
     '''

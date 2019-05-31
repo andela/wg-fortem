@@ -349,7 +349,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         '''
         if ((self.sleep_hours and self.freetime_hours and self.work_hours)
            and (self.sleep_hours + self.freetime_hours + self.work_hours) > 24):
-                raise ValidationError(_('The sum of all hours has to be 24'))
+            raise ValidationError(_('The sum of all hours has to be 24'))
 
     def __str__(self):
         '''
@@ -380,8 +380,7 @@ by the US Department of Agriculture. It is extremely complete, with around
             return 0
 
         weight = self.weight if self.use_metric else AbstractWeight(self.weight, 'lb').kg
-        return weight / (self.height / decimal.Decimal(100) *
-                         self.height / decimal.Decimal(100.0))
+        return weight / (self.height / decimal.Decimal(100) * self.height / decimal.Decimal(100.0))
 
     def calculate_basal_metabolic_rate(self, formula=1):
         '''
