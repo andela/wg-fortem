@@ -24,6 +24,7 @@ from wger.core.models import (
     License,
     RepetitionUnit,
     WeightUnit)
+from django.contrib.auth.models import User
 
 
 class UserprofileSerializer(serializers.ModelSerializer):
@@ -85,3 +86,12 @@ class WeightUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = WeightUnit
         fields = []
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    """ User register serializer """
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+        extra_kwargs = {'password': {'write_only': True}, 'username': {'min_length': 3}}

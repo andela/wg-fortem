@@ -80,3 +80,14 @@ class UpdateOnlyPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         return (request.user and request.user.is_authenticated()
                 and request.method in ['GET', 'HEAD', 'OPTIONS', 'PATCH'])
+
+
+class AllowCreateUserPermission(permissions.BasePermission):
+    """
+    Custom permission that restricts users who can create other users
+    """
+
+    def has_permission(self, request, view):
+        if request.user.is_authenticated:
+            return request.user.userprofile.user_can_create_users
+        return False
