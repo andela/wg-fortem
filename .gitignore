@@ -69,3 +69,5 @@ venv-django/
 
 # enviroment variables
 .env
+#macfiles
+*.DS_Store
