@@ -43,6 +43,11 @@ from wger.core.api import views as core_api_views
 from wger.exercises.api import views as exercises_api_views
 from wger.nutrition.api import views as nutrition_api_views
 from wger.weight.api import views as weight_api_views
+from wger.gym.views.gym import (
+    GymToggleTrainerStatus,
+    GymDeleteTrainer,
+    GymTrainersView
+)
 
 #
 # REST API
@@ -154,9 +159,9 @@ urlpatterns = i18n_patterns(
     path('gym/', include('wger.gym.urls', namespace="gym")),
     path('email/', include('wger.email.urls', namespace="email")),
     path('sitemap\.xml',
-        sitemap,
-        {'sitemaps': sitemaps},
-        name='sitemap')
+         sitemap,
+         {'sitemaps': sitemaps},
+         name='sitemap')
 )
 
 #
@@ -164,19 +169,24 @@ urlpatterns = i18n_patterns(
 #
 urlpatterns += [
     path('robots\.txt',
-        TextTemplateView.as_view(template_name="robots.txt"),
-        name='robots'),
+         TextTemplateView.as_view(template_name="robots.txt"),
+         name='robots'),
     path('manifest\.webapp', WebappManifestView.as_view(template_name="manifest.webapp")),
     path('amazon-manifest\.webapp', WebappManifestView.as_view(template_name="amazon-manifest.webapp")),
 
     # API
     path('api/', include(v1_api.urls)),
     path('api/v2/exercise/search/',
-        exercises_api_views.search,
-        name='exercise-search'),
+         exercises_api_views.search,
+         name='exercise-search'),
     path('api/v2/ingredient/search/',
-        nutrition_api_views.search,
-        name='ingredient-search'),
+         nutrition_api_views.search,
+         name='ingredient-search'),
+    path('api/v2/gym/<pk>/trainers/<trainerId>/toggle',
+         GymToggleTrainerStatus.as_view(), name='toggle-trainer'),
+    path('api/v2/gym/<pk>/trainers/<trainerId>/', GymDeleteTrainer.as_view(), name="delete-trainer"),
+    path('api/v2/gym/<pk>/trainers',
+         GymTrainersView.as_view({'get': 'list'}), name="list-trainers"),
     path('api/v2/', include(router.urls)),
 ]
 

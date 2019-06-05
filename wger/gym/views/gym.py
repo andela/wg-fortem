@@ -16,6 +16,9 @@
 import csv
 import datetime
 import logging
+from rest_framework import (viewsets, generics)
+from rest_framework.response import Response
+
 
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -49,6 +52,8 @@ from wger.gym.models import (
     GymAdminConfig,
     GymUserConfig
 )
+from wger.gym.api.serializers import GymTrainerSerializer
+
 from wger.config.models import GymConfig as GlobalGymConfig
 from wger.utils.generic_views import (
     WgerFormMixin,
@@ -77,6 +82,93 @@ class GymListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
 
+class GymTrainersView(viewsets.ModelViewSet):
+    serializer_class = GymTrainerSerializer
+
+    def get_queryset(self, request, *args, **kwargs):
+        '''
+        Only allow access to appropriate objects
+        '''
+        return Gym.objects.get_trainers(self.kwargs['pk'])
+
+    def list(self, request, *args, **kwargs):
+        return Response({
+            "data": {
+                "active": self.serializer_class([trainer
+                                                 for trainer
+                                                 in self.get_queryset(request, *args, **kwargs)
+                                                 if trainer.is_active], many=True).data,
+                "inactive": self.serializer_class([trainer
+                                                   for trainer
+                                                   in self.get_queryset(request, *args, **kwargs)
+                                                   if trainer.is_active is False], many=True).data
+
+            },
+            "status": 200
+        })
+
+
+def dispatch_trainer_action(obj, request, type="delete", *args, **kwargs):
+    '''
+    Generic function that handles toggling a trainer's active status
+    or
+    deleting the trainers from the gym
+    '''
+    if(request.user in Gym.objects.get_managers(obj.kwargs['pk']) or request.user.is_staff):
+        # check if trainer belongs to this gym.
+        try:
+            trainer = User.objects.get(pk=obj.kwargs["trainerId"])
+            if trainer in Gym.objects.get_trainers(obj.kwargs["pk"]):
+                # dispatch action here
+                # delete
+                if type == "delete":
+                    trainer.delete()
+                    return Response({
+                        "data": "Successfully deleted trainer",
+                        "status": 200
+                    }, status=200)
+
+                # update trainer details here
+                trainer.is_active = False if trainer.is_active else True
+                trainer.save()
+                return Response({
+                    "data": "Successfully toggled the trainer's active status to {}"
+                    .format(trainer.is_active),
+                    "status": 200
+                }, status=200)
+
+            return Response({
+                "error": "The trainer specified does not belong to this gym",
+                "status": 404
+            }, status=404)
+        except User.DoesNotExist:
+            return Response({
+                "error": "The trainer specified does not exist"
+            }, status=404)
+    return Response({
+        "error": "You are not allowed to {} a gym trainer".format(type),
+        "status": 403
+    }, status=403)
+
+
+class GymToggleTrainerStatus(generics.CreateAPIView):
+    '''
+        Deactivate or Activate a gym trainer'S status as a manager.
+    '''
+
+    def post(self, request, *args, **kwargs):
+        return dispatch_trainer_action(self, request, type="edit", *args, **kwargs)
+
+
+class GymDeleteTrainer(generics.DestroyAPIView):
+    '''
+        Delete a trainer from a gym.
+    '''
+
+    def delete(self, request, *args, **kwargs):
+        return dispatch_trainer_action(self, request, type="delete", *args, **kwargs)
+
+
 class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, ListView):
     '''
     Overview of all users for a specific gym
@@ -91,7 +183,7 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, L
         '''
         if request.user.has_perm('gym.manage_gyms') \
             or ((request.user.has_perm('gym.manage_gym')
-                or request.user.has_perm('gym.gym_trainer'))
+                 or request.user.has_perm('gym.gym_trainer'))
                 and request.user.userprofile.gym_id == int(self.kwargs['pk'])):
             return super(GymUserListView, self).dispatch(request, *args, **kwargs)
         return HttpResponseForbidden()

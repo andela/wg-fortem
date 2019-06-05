@@ -26,6 +26,7 @@ class GymManager(models.Manager):
     '''
     Custom query manager for Gyms
     '''
+
     def get_members(self, gym_pk):
         '''
         Returns all members for this gym (i.e non-admin ones)
@@ -50,3 +51,21 @@ class GymManager(models.Manager):
         users = User.objects.filter(userprofile__gym_id=gym_pk)
         return users.filter(Q(groups__permissions=perm_gym) | Q(groups__permissions=perm_gyms)
                             | Q(groups__permissions=perm_trainer)).distinct()
+
+    def get_trainers(self, gym_pk):
+        '''
+        Returns all trainers of a gym
+        '''
+        perm_trainer = Permission.objects.get(codename='gym_trainer')
+        perm_gyms = Permission.objects.get(codename='manage_gyms')
+        users = User.objects.filter(userprofile__gym_id=gym_pk)
+        exclude_admins = Q(groups__permissions=perm_gyms)
+        return users.filter(Q(groups__permissions=perm_trainer)).exclude(exclude_admins).distinct()
+
+    def get_managers(self, gym_pk):
+        '''
+        Returns all gym managers for a specific gym
+        '''
+        perm_mamagers = Permission.objects.get(codename='manage_gym')
+        users = User.objects.filter(userprofile__gym_id=gym_pk)
+        return users.filter(Q(groups__permissions=perm_mamagers)).distinct()
