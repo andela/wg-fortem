@@ -25,6 +25,7 @@ from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
+from django.contrib.auth import views as auth_views
 
 from wger.nutrition.sitemap import NutritionSitemap
 from wger.exercises.sitemap import ExercisesSitemap
@@ -50,6 +51,7 @@ from wger.gym.views.gym import (
 )
 
 from wger.gym.api import views as gym_api_views
+
 #
 # REST API
 #
@@ -196,6 +198,8 @@ urlpatterns += [
 
     #     path('api/v2/', include())
 
+    path('oauth/', include('rest_framework_social_oauth2.urls')),
+    path('api/v2/', include('wger.social_auth.urls'))
 ]
 
 #
