@@ -20,6 +20,7 @@ with open('README.rst') as readme:
 with open('requirements.txt') as requirements_production:
     install_requires = requirements_production.readlines()
 
+
 setup(
     name='wger',
     description='FLOSS workout, fitness and weight manager/tracker written with Django',
@@ -50,5 +51,5 @@ setup(
         'console_scripts': [
             'wger = wger.__main__:main',
         ],
-    },
+    }
 )

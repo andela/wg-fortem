@@ -104,6 +104,7 @@ BOWER_INSTALLED_APPS = (
     'sortablejs#1.4.x',
 )
 MIDDLEWARE = (
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -47,7 +47,6 @@ coverage.xml
 
 # Django stuff:
 *.log
-settings*.py
 *.sqlite
 /CACHE
 
@@ -67,3 +66,6 @@ node_modules
 venv/
 venv-django/
 .vscode/
+
+# enviroment variables
+.env
