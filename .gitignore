@@ -7,6 +7,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+*.env
+.DS_Store
 env/
 venv-django/
 build/
