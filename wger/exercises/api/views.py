@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, api_view
@@ -75,6 +75,24 @@ class ExerciseViewSet(viewsets.ModelViewSet):
         # Todo is it right to call set author after save?
         obj.set_author(self.request)
         obj.save()
+
+    def retrieve(self, request, pk):
+        queryset = self.get_queryset().filter(pk=pk)
+        serializer = ExerciseSerializer(
+            queryset, many=True, context={'request': request})
+
+        images = ExerciseImage.objects.filter(exercise__id=pk)
+        image_serializer = ExerciseImageSerializer(images, many=True)
+
+        count = len(serializer.data)
+
+        if count > 0:
+            exercise = serializer.data
+            exercise[0]['images'] = image_serializer.data
+            return Response(exercise, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "No exercise found"},
+                            status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET'])
