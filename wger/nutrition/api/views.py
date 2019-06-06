@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import detail_route
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -223,6 +223,20 @@ class MealViewSet(WgerOwnerObjectModelViewSet):
         '''
         serializer.save(order=1)
 
+    def create(self, request):
+        plan_id = request.data.get('plan', '')
+        try:
+            NutritionPlan.objects.get(id=plan_id)
+            serializer = self.serializer_class(
+                data=request.data, context={'request': request}
+            )
+            serializer.is_valid(raise_exception=True)
+        except NutritionPlan.DoesNotExist:
+            return Response({"error": "NutritionPlan with provided id not found"},
+                            status=status.HTTP_404_NOT_FOUND)
+        serializer.save(order=1)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     def get_owner_objects(self):
         '''
         Return objects to check for ownership permission
@@ -256,11 +270,25 @@ class MealItemViewSet(WgerOwnerObjectModelViewSet):
         '''
         return MealItem.objects.filter(meal__plan__user=self.request.user)
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer, **kwargs):
         '''
         Set the order
         '''
         serializer.save(order=1)
+
+    def create(self, request):
+        meal_id = request.data.get('meal', '')
+        try:
+            Meal.objects.get(id=meal_id)
+            serializer = self.serializer_class(
+                data=request.data, context={'request': request}
+            )
+            serializer.is_valid(raise_exception=True)
+        except Meal.DoesNotExist:
+            return Response({"error": "Meal with provided id not found"},
+                            status=status.HTTP_404_NOT_FOUND)
+        serializer.save(order=1)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get_owner_objects(self):
         '''

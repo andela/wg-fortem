@@ -16,9 +16,11 @@
 from django.urls import reverse
 
 from wger.core.tests import api_base_test
+from wger.core.tests.base_testcase import WorkoutManagerTestCase
 from wger.core.tests.base_testcase import WorkoutManagerAddTestCase
 from wger.core.tests.base_testcase import WorkoutManagerEditTestCase
 from wger.nutrition.models import MealItem
+import json
 
 
 class EditMealItemUnitTestCase(WorkoutManagerEditTestCase):
@@ -80,3 +82,45 @@ class MealItemApiTestCase(api_base_test.ApiBaseResourceTestCase):
     data = {'meal': 2,
             'amount': 100,
             'ingredient': 1}
+
+
+class MealItemApiEdgeTestCase(WorkoutManagerTestCase):
+    def create_meal(self):
+        response = self.client.post('/api/v2/meal/', {
+            "plan": 1
+        })
+        return json.loads(response.content)["id"]
+
+    def test_create_mealitem_meal_does_not_exist(self):
+        self.user_login("test")
+        create_mealitem = self.client.post('/api/v2/mealitem/', {
+            "amount": 800,
+            "ingredient": 34,
+            "meal": 190,
+            "time": "23:00:00"
+        }, format='json')
+        self.assertEqual(create_mealitem.status_code, 404)
+
+    def test_create_mealitem_ingredient_not_provided(self):
+        self.user_login("test")
+        self.create_meal()
+        create_mealitem = self.client.post(
+            '/api/v2/mealitem/', {
+                "amount": 800,
+                "meal": 1,
+                "time": "23:00:00"
+            }, format='json'
+        )
+        self.assertEqual(create_mealitem.status_code, 400)
+
+    def test_create_mealitem_amount_not_provided(self):
+        self.user_login("test")
+        self.create_meal()
+        create_mealitem = self.client.post(
+            '/api/v2/mealitem/', {
+                "ingredient": 34,
+                "meal": 1,
+                "time": "23:00:00"
+            }, format='json'
+        )
+        self.assertEqual(create_mealitem.status_code, 400)

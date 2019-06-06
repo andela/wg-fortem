@@ -132,3 +132,25 @@ class MealApiTestCase(api_base_test.ApiBaseResourceTestCase):
     data = {'time': datetime.time(9, 2),
             'plan': 4,
             'order': 1}
+
+
+class MealApiEdgeTestCase(WorkoutManagerTestCase):
+    def create_nutritionplan(self):
+        self.client.post('/api/v2/nutritionplan/')
+
+    def test_create_meal_plan_does_not_exist(self):
+        self.user_login("test")
+        create_meal = self.client.post('/api/v2/meal/', {
+            "plan": 800
+        }, format='json')
+        self.assertEqual(create_meal.status_code, 404)
+
+    def test_create_meal_time_not_provided(self):
+        self.user_login("test")
+        self.create_nutritionplan()
+        create_meal = self.client.post(
+            '/api/v2/meal/', {
+                "plan": 1
+            }, format='json'
+        )
+        self.assertEqual(create_meal.status_code, 201)
