@@ -143,7 +143,7 @@ class MealApiEdgeTestCase(WorkoutManagerTestCase):
         create_meal = self.client.post('/api/v2/meal/', {
             "plan": 800
         }, format='json')
-        self.assertEqual(create_meal.status_code, 404)
+        self.assertEqual(create_meal.status_code, 400)
 
     def test_create_meal_time_not_provided(self):
         self.user_login("test")

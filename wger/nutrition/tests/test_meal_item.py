@@ -99,7 +99,7 @@ class MealItemApiEdgeTestCase(WorkoutManagerTestCase):
             "meal": 190,
             "time": "23:00:00"
         }, format='json')
-        self.assertEqual(create_mealitem.status_code, 404)
+        self.assertEqual(create_mealitem.status_code, 400)
 
     def test_create_mealitem_ingredient_not_provided(self):
         self.user_login("test")

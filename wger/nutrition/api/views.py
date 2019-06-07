@@ -217,23 +217,11 @@ class MealViewSet(WgerOwnerObjectModelViewSet):
         '''
         return Meal.objects.filter(plan__user=self.request.user)
 
-    def perform_create(self, serializer):
-        '''
-        Set the order
-        '''
-        serializer.save(order=1)
-
     def create(self, request):
-        plan_id = request.data.get('plan', '')
-        try:
-            NutritionPlan.objects.get(id=plan_id)
-            serializer = self.serializer_class(
-                data=request.data, context={'request': request}
-            )
-            serializer.is_valid(raise_exception=True)
-        except NutritionPlan.DoesNotExist:
-            return Response({"error": "NutritionPlan with provided id not found"},
-                            status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request}
+        )
+        serializer.is_valid(raise_exception=True)
         serializer.save(order=1)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -270,23 +258,11 @@ class MealItemViewSet(WgerOwnerObjectModelViewSet):
         '''
         return MealItem.objects.filter(meal__plan__user=self.request.user)
 
-    def perform_create(self, serializer, **kwargs):
-        '''
-        Set the order
-        '''
-        serializer.save(order=1)
-
     def create(self, request):
-        meal_id = request.data.get('meal', '')
-        try:
-            Meal.objects.get(id=meal_id)
-            serializer = self.serializer_class(
-                data=request.data, context={'request': request}
-            )
-            serializer.is_valid(raise_exception=True)
-        except Meal.DoesNotExist:
-            return Response({"error": "Meal with provided id not found"},
-                            status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request}
+        )
+        serializer.is_valid(raise_exception=True)
         serializer.save(order=1)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
