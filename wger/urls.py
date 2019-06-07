@@ -187,6 +187,9 @@ urlpatterns += [
     path('api/v2/gym/<pk>/trainers/<trainerId>/', GymDeleteTrainer.as_view(), name="delete-trainer"),
     path('api/v2/gym/<pk>/trainers',
          GymTrainersView.as_view({'get': 'list'}), name="list-trainers"),
+    path('api/v2/user/allow-create-users', core_api_views.AssignCreateUserPermission.as_view(),
+         name='assign-create-users'),
+    path('api/v2/user/', core_api_views.UserRegistrationView.as_view(), name='user_api_register'),
     path('api/v2/', include(router.urls)),
 ]
 
