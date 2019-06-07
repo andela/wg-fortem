@@ -37,144 +37,144 @@ app_name = "gym"
 # 'sub patterns' for gyms
 patterns_gym = [
     path(r'list',
-        gym.GymListView.as_view(),
-        name='list'),
+         gym.GymListView.as_view(),
+         name='list'),
     path(r'new-user-data/view',
-        gym.gym_new_user_info,
-        name='new-user-data'),
+         gym.gym_new_user_info,
+         name='new-user-data'),
     path(r'new-user-data/export',
-        gym.gym_new_user_info_export,
-        name='new-user-data-export'),
+         gym.gym_new_user_info_export,
+         name='new-user-data-export'),
     path(r'<pk>/members',
-        gym.GymUserListView.as_view(),
-        name='user-list'),
+         gym.GymUserListView.as_view(),
+         name='user-list'),
     path(r'<gym_pk>/add-member',
-        gym.GymAddUserView.as_view(),
-        name='add-user'),
+         gym.GymAddUserView.as_view(),
+         name='add-user'),
     path(r'add',
-        gym.GymAddView.as_view(),
-        name='add'),
+         gym.GymAddView.as_view(),
+         name='add'),
     path(r'<pk>/edit',
-        gym.GymUpdateView.as_view(),
-        name='edit'),
+         gym.GymUpdateView.as_view(),
+         name='edit'),
     path(r'<pk>/delete',
-        gym.GymDeleteView.as_view(),
-        name='delete'),
+         gym.GymDeleteView.as_view(),
+         name='delete'),
     path(r'user/<user_pk>/permission-edit',
-        gym.gym_permissions_user_edit,
-        name='edit-user-permission'),
+         gym.gym_permissions_user_edit,
+         name='edit-user-permission'),
     path(r'user/<user_pk>/reset-user-password',
-        gym.reset_user_password,
-        name='reset-user-password'),
+         gym.reset_user_password,
+         name='reset-user-password'),
 ]
 
 # 'sub patterns' for gym config
 patterns_gymconfig = [
     path(r'<pk>/edit',
-        config.GymConfigUpdateView.as_view(),
-        name='edit'),
+         config.GymConfigUpdateView.as_view(),
+         name='edit'),
 ]
 
 
 # 'sub patterns' for gym admin config
 patterns_adminconfig = [
     path(r'<pk>/edit',
-        admin_config.ConfigUpdateView.as_view(),
-        name='edit'),
+         admin_config.ConfigUpdateView.as_view(),
+         name='edit'),
 ]
 
 # 'sub patterns' for gym user config
 patterns_userconfig = [
     path(r'<pk>/edit',
-        user_config.ConfigUpdateView.as_view(),
-        name='edit'),
+         user_config.ConfigUpdateView.as_view(),
+         name='edit'),
 ]
 
 # 'sub patterns' for admin notes
 patterns_admin_notes = [
     path(r'list/user/<user_pk>',
-        admin_notes.ListView.as_view(),
-        name='list'),
+         admin_notes.ListView.as_view(),
+         name='list'),
     path(r'add/user/<user_pk>',
-        admin_notes.AddView.as_view(),
-        name='add'),
+         admin_notes.AddView.as_view(),
+         name='add'),
     path(r'<pk>/edit',
-        admin_notes.UpdateView.as_view(),
-        name='edit'),
+         admin_notes.UpdateView.as_view(),
+         name='edit'),
     path(r'<pk>/delete',
-        admin_notes.DeleteView.as_view(),
-        name='delete'),
+         admin_notes.DeleteView.as_view(),
+         name='delete'),
 ]
 
 # 'sub patterns' for user documents
 patterns_documents = [
     path(r'list/user/<user_pk>',
-        document.ListView.as_view(),
-        name='list'),
+         document.ListView.as_view(),
+         name='list'),
     path(r'add/user/<user_pk>',
-        document.AddView.as_view(),
-        name='add'),
+         document.AddView.as_view(),
+         name='add'),
     path(r'<pk>/edit',
-        document.UpdateView.as_view(),
-        name='edit'),
+         document.UpdateView.as_view(),
+         name='edit'),
     path(r'<pk>/delete',
-        document.DeleteView.as_view(),
-        name='delete'),
+         document.DeleteView.as_view(),
+         name='delete'),
 ]
 
 # sub patterns for contracts
 patterns_contracts = [
     path(r'add/<user_pk>',
-        contract.AddView.as_view(),
-        name='add'),
+         contract.AddView.as_view(),
+         name='add'),
     path(r'view/<pk>',
-        contract.DetailView.as_view(),
-        name='view'),
+         contract.DetailView.as_view(),
+         name='view'),
     path(r'edit/<pk>',
-        contract.UpdateView.as_view(),
-        name='edit'),
+         contract.UpdateView.as_view(),
+         name='edit'),
     path(r'list/<user_pk>',
-        contract.ListView.as_view(),
-        name='list'),
+         contract.ListView.as_view(),
+         name='list'),
 ]
 
 # sub patterns for contract types
 patterns_contract_types = [
     path(r'add/<gym_pk>',
-        contract_type.AddView.as_view(),
-        name='add'),
+         contract_type.AddView.as_view(),
+         name='add'),
     path(r'edit/<pk>',
-        contract_type.UpdateView.as_view(),
-        name='edit'),
+         contract_type.UpdateView.as_view(),
+         name='edit'),
     path(r'delete/<pk>',
-        contract_type.DeleteView.as_view(),
-        name='delete'),
+         contract_type.DeleteView.as_view(),
+         name='delete'),
     path(r'list/<gym_pk>',
-        contract_type.ListView.as_view(),
-        name='list'),
+         contract_type.ListView.as_view(),
+         name='list'),
 ]
 
 # sub patterns for contract options
 patterns_contract_options = [
     path(r'add/<gym_pk>',
-        contract_option.AddView.as_view(),
-        name='add'),
+         contract_option.AddView.as_view(),
+         name='add'),
     path(r'edit/<pk>',
-        contract_option.UpdateView.as_view(),
-        name='edit'),
+         contract_option.UpdateView.as_view(),
+         name='edit'),
     path(r'delete/<pk>',
-        contract_option.DeleteView.as_view(),
-        name='delete'),
+         contract_option.DeleteView.as_view(),
+         name='delete'),
     path(r'list/<gym_pk>',
-        contract_option.ListView.as_view(),
-        name='list'),
+         contract_option.ListView.as_view(),
+         name='list'),
 ]
 
 # sub patterns for exports
 patterns_export = [
     path(r'users/<gym_pk>',
-        export.users,
-        name='users'),
+         export.users,
+         name='users'),
 ]
 
 #
