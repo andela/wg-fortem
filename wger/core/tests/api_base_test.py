@@ -99,6 +99,7 @@ class ApiGetTestCase(object):
     '''
     Base test case for testing GET access to the API
     '''
+
     def test_ordering(self):
         '''
         Test that ordering the resource works
@@ -376,6 +377,7 @@ class ApiPutTestCase(object):
 
         if self.private_resource:
             # Anonymous user
+
             response = self.client.put(self.url_detail, data=self.data)
             self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 

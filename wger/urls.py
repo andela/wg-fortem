@@ -49,6 +49,7 @@ from wger.gym.views.gym import (
     GymTrainersView
 )
 
+from wger.gym.api import views as gym_api_views
 #
 # REST API
 #
@@ -135,7 +136,8 @@ router.register(r'mealitem', nutrition_api_views.MealItemViewSet, base_name='mea
 # Weight app
 router.register(r'weightentry', weight_api_views.WeightEntryViewSet, base_name='weightentry')
 
-
+# Gym app
+router.register(r'gym', gym_api_views.GymViewSet, base_name='gym')
 admin.autodiscover()
 
 #
@@ -191,6 +193,9 @@ urlpatterns += [
          name='assign-create-users'),
     path('api/v2/user/', core_api_views.UserRegistrationView.as_view(), name='user_api_register'),
     path('api/v2/', include(router.urls)),
+
+    #     path('api/v2/', include())
+
 ]
 
 #
