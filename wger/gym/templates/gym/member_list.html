@@ -4,7 +4,7 @@
 {% block title %}{{gym}}{% endblock %}
 
 {% block breadcrumbs %}
-    {{ block.super }}
+{{ block.super }}
 
     {% if perms.gym.manage_gyms %}
         {% breadcrumb "Gyms" "gym:gym:list" %}
@@ -14,63 +14,90 @@
 
 
 {% block content %}
-{% if perms.gym.manage_gym or perms.gym.gym_trainer %}
-    {% include 'gym/partial_user_list.html' %}
-{% endif %}
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#active-users" aria-controls="active-users" role="tab" data-toggle="tab">Active Members</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#deactivated-users" aria-controls="eactivated-users" role="tab" data-toggle="tab">Inactive
+                Members</a>
+        </li>
+    </ul>
+    <div class="clear-fix">
 
+    </div>
+</div>
+<div class="tab-content">
+    <div id="active-users" role="tabpanel" class="tab-pane active">
 
-<h4>{% trans "Administrators and trainers" %}</h4>
-<table class="table table-hover">
-<thead>
-<tr>
-    <th style="width: 10%;">{% trans "ID" %}</th>
-    <th style="width: 40%;">{% trans "Username" %}</th>
-    <th>{% trans "Name" %}</th>
-    {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
-        <th style="text-align: right;">{% trans "Roles" %}</th>
-    {% endif %}
-</tr>
-</thead>
-<tbody>
-{% for current_user in object_list.admins %}
-<tr>
-    <td>
-        {{current_user.obj.pk}}
-    </td>
-    <td>
-        {{current_user.obj}}
-
-        {% if current_user.perms.gym_trainer %}
-            <span class="label label-primary">{% trans "Trainer" %}</span>
+        {% if perms.gym.manage_gym or perms.gym.gym_trainer %}
+        {% include 'gym/partial_user_list.html' with table_id='main_members_list' %}
         {% endif %}
 
-        {% if current_user.perms.manage_gym %}
-            <span class="label label-primary">{% trans "Gym manager" %}</span>
+
+        <h4>{% trans "Administrators and trainers" %}</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">{% trans "ID" %}</th>
+                    <th style="width: 40%;">{% trans "Username" %}</th>
+                    <th>{% trans "Name" %}</th>
+                    {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
+                        <th style="text-align: right;">{% trans "Roles" %}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for current_user in object_list.admins %}
+                <tr>
+                    <td>
+                        {{current_user.obj.pk}}
+                    </td>
+                    <td>
+                        {{current_user.obj}}
+
+                        {% if current_user.perms.gym_trainer %}
+                        <span class="label label-primary">{% trans "Trainer" %}</span>
+                        {% endif %}
+
+                        {% if current_user.perms.manage_gym %}
+                        <span class="label label-primary">{% trans "Gym manager" %}</span>
+                        {% endif %}
+
+                        {% if current_user.perms.manage_gyms %}
+                        <span class="label label-primary">{% trans "General manager" %}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{current_user.obj.get_full_name}}
+                    </td>
+
+                    {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
+                    <td style="text-align: right;">
+                        <a href="{% url 'gym:gym:edit-user-permission' current_user.obj.pk %}"
+                            class="btn btn-default btn-xs wger-modal-dialog">
+                            <span class="{% fa_class 'cog' %}"></span>
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">{% trans "This gym has no administrators or trainers" %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="deactivated-users" role="tabpanel" class="tab-pane fade">
+        {% if perms.gym.manage_gym or perms.gym.gym_trainer %}
+        {% include 'gym/partial_user_list.html' with user_table=inactive_users_table table_id='inactive_member_list' %}
         {% endif %}
 
-        {% if current_user.perms.manage_gyms %}
-            <span class="label label-primary">{% trans "General manager" %}</span>
-        {% endif %}
-    </td>
-    <td>
-        {{current_user.obj.get_full_name}}
-    </td>
+    </div>
 
-    {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
-    <td style="text-align: right;">
-        <a href="{% url 'gym:gym:edit-user-permission' current_user.obj.pk %}" class="btn btn-default btn-xs wger-modal-dialog">
-            <span class="{% fa_class 'cog' %}"></span>
-        </a>
-    </td>
-    {% endif %}
-</tr>
-{% empty %}
-<tr>
-    <td colspan="4">{% trans "This gym has no administrators or trainers" %}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+</div>
 {% endblock %}
 
 
@@ -108,9 +135,9 @@
         <td>{% trans "Email" %}</td>
         <td>
             {% if gym.email %}
-                <a href="mailto:{{gym.email}}">{{gym.email}}</a>
+            <a href="mailto:{{gym.email}}">{{gym.email}}</a>
             {% else %}
-                -/-
+            -/-
             {% endif %}
         </td>
     </tr>
@@ -169,7 +196,8 @@
     </button>
     <ul class="dropdown-menu" role="menu">
         <li>
-            <a href="{% url 'gym:admin_config:edit' user.gymadminconfig.id %}" class="wger-modal-dialog">{% trans "Edit"%}</a>
+            <a href="{% url 'gym:admin_config:edit' user.gymadminconfig.id %}"
+                class="wger-modal-dialog">{% trans "Edit"%}</a>
         </li>
     </ul>
 </div>
@@ -180,9 +208,9 @@
         <td>{% trans "Overview of inactive members" %}</td>
         <td style="text-align: right;">
             {% if user.gymadminconfig.overview_inactive %}
-                <span class="{% fa_class 'check' %}"></span>
+            <span class="{% fa_class 'check' %}"></span>
             {% else %}
-                <span class="{% fa_class 'times' %}"></span>
+            <span class="{% fa_class 'times' %}"></span>
             {% endif %}
         </td>
     </tr>
@@ -195,7 +223,7 @@
 {# Contract configuration #}
 {#                        #}
 {% if perms.gym.change_contracttype or perms.gym.change_contractoption %}
-    <h4>{% trans "Contracts" %}</h4>
+<h4>{% trans "Contracts" %}</h4>
 {% endif %}
 {% if perms.gym.change_contracttype %}
 <div class="btn-group pull-right">
@@ -319,8 +347,8 @@
 {#         #}
 {% block options %}
 {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
-    <a href="{% url 'gym:gym:add-user' gym.pk %}" class="btn btn-success btn-sm wger-modal-dialog">
-        {% trans "Add member" %}
-    </a>
+<a href="{% url 'gym:gym:add-user' gym.pk %}" class="btn btn-success btn-sm wger-modal-dialog">
+    {% trans "Add member" %}
+</a>
 {% endif %}
 {% endblock %}
