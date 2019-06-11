@@ -81,7 +81,7 @@ INSTALLED_APPS = (
 
     # Breadcrumbs
     'django_bootstrap_breadcrumbs',
-
+    'django_filters',
     # CORS
     'corsheaders',
 

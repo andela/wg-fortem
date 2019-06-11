@@ -225,6 +225,7 @@ def get_last_entries(user, amount=5):
             day_diff = (curr_entry.date - prev_entry.date).days
         else:
             weight_diff = day_diff = None
-            last_entries_details.append((curr_entry, weight_diff, day_diff))
+
+        last_entries_details.append((curr_entry, weight_diff, day_diff))
 
     return last_entries_details
