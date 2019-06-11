@@ -257,6 +257,22 @@ an appointment for each training day with the appropriate exercises.{% endblockt
             </a>
         </li>
         {% if is_owner %}
+        <li>
+            <a id="export-json-button">
+                <span class="{% fa_class 'download' %}"></span>
+                {% trans "Export as JSON" %}
+            </a>
+        </li>
+        {% endif %}
+        {% if is_owner %}
+        <li>
+            <a href="">
+                <span class="{% fa_class 'upload' %}"></span>
+                {% trans "Import JSON" %}
+            </a>
+        </li>
+        {% endif %}
+        {% if is_owner %}
         <li role="separator" class="divider"></li>
         <li>
             <a href="{% url 'manager:workout:delete' workout.id %}" class="wger-modal-dialog">

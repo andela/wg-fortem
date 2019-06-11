@@ -12,7 +12,6 @@
     <meta property="og:description" content="{{ workout }} / {{owner_user.username}}">
 {% endblock %}
 
-
 {#       #}
 {# Title #}
 {#       #}
@@ -51,7 +50,8 @@ $(document).ready(function() {
 {#         #}
 {% block content %}
 
-
+<div class="alert alert-danger has-error" id="import-error" style="display: none">
+</div>
 {% if workout.comment %}
 <p>
     <strong>{% trans "Goal" %}:</strong> {{workout.comment}}
@@ -213,6 +213,7 @@ an appointment for each training day with the appropriate exercises.{% endblockt
 {# Options #}
 {#         #}
 {% block options %}
+
 <div class="btn-group">
     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="{% fa_class 'cog' %}"></span>
@@ -251,6 +252,27 @@ an appointment for each training day with the appropriate exercises.{% endblockt
                {% trans "Make a copy of this workout" %}
             </a>
         </li>
+        {% if is_owner %}
+        <li>
+            <a id="export-json-button" style="cursor: pointer">
+                <span class="{% fa_class 'download' %}"></span>
+                {% trans "Export as JSON" %}
+            </a>
+        </li>
+        {% endif %}
+        {% if is_owner %}
+        <li>
+            <a>
+                <input id="get_the_file" style="display: none" type="file" class="{% fa_class 'upload' %}">
+
+                <span class="{% fa_class 'upload' %}"></span>
+
+                <label for="get_the_file" style="cursor: pointer">
+                    {% trans "Import JSON" %}
+                </label>
+            </a>     
+        </li>
+        {% endif %}
         {% if is_owner %}
         <li role="separator" class="divider"></li>
         <li>

@@ -666,6 +666,28 @@ $(document).ready(function () {
     window.location.href = targetUrl;
   });
 
+  // Handle the workout JSON export
+  $('#export-json-button').click(function (e) {
+    var targetUrl;
+    var token;
+    var uid;
+    var workoutId;
+    var downloadInfo;
+    e.preventDefault();
+
+    downloadInfo = $('#pdf-download-info');
+    workoutId = downloadInfo.data('workoutId');
+    token = downloadInfo.data('token');
+    uid = downloadInfo.data('uid');
+
+    // Put together and redirect
+    targetUrl = '/' + getCurrentLanguage() +
+      '/workout/' + workoutId + '/json' +
+      '/' + uid +
+      '/' + token;
+    window.location.href = targetUrl;
+  });
+
   // Handle the workout PDF download options for schedules
   $('#download-pdf-button-schedule').click(function (e) {
     var targetUrl;
@@ -696,5 +718,40 @@ $(document).ready(function () {
       '/' + uid +
       '/' + token;
     window.location.href = targetUrl;
+  });
+
+  // Get JSON path
+  $('#get_the_file').change(function () {
+    var fileToRead = $('#get_the_file')[0].files[0];
+    var fileread = new FileReader();
+    var url = '/en/workout/json/import';
+    var downloadInfo = $('#pdf-download-info');
+    var scheduleId = downloadInfo.attr('data-workout-id');
+
+    fileread.onload = function (e) {
+      var content = {};
+      var errorBox = $('#import-error');
+      content.data = e.target.result;
+      content.workout_id = scheduleId;
+      console.log(content);
+      fetch(url, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        method: 'POST',
+        body: JSON.stringify(content)
+      }).then(function (response) {
+        if (response.status === 200) {
+          location.reload();
+        } else {
+          console.log(errorBox);
+          errorBox.html('Ooops! Something went wrong. Verify that your JSON file is valid');
+          errorBox.css('display', 'block');
+        }
+      });
+    };
+    fileread.readAsText(fileToRead);
   });
 });
