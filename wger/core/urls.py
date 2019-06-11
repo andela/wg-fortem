@@ -23,6 +23,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth import views
 from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView
 
 from wger.core.views import (
     user,
@@ -34,6 +35,8 @@ from wger.core.views import (
 
 
 )
+from wger.core.forms import (
+    UserLoginForm)
 
 app_name = "core"
 # sub patterns for languages
@@ -58,7 +61,7 @@ patterns_language = [
 # sub patterns for user
 patterns_user = [
     path("login",
-         user.login,
+         LoginView.as_view(template_name='user/login.html', authentication_form=UserLoginForm),
          name='login'),
     path("logout",
          user.logout,
