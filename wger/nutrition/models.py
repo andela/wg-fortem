@@ -601,6 +601,10 @@ class MealItem(models.Model):
                           blank=True,
                           verbose_name=_('Time (approx)'))
 
+    meal_type = models.CharField(max_length=15,
+                                 verbose_name=_('Type'),
+                                 default=('Planned'))
+
     def __str__(self):
         '''
         Return a more human-readable representation
