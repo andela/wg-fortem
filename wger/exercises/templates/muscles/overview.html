@@ -12,10 +12,10 @@
 <script src="{% static 'js/svg.js' %}"></script>
 
 <script>
-$(document).ready(function() {
-    //Prefetch the background images
-    {% for muscle in muscle_list|first %}
-        wgerPrefetchImages(['/static/images/muscles/main/muscle-' + {{muscle.id}} + '.svg']);
+    $(document).ready(function () {
+        //Prefetch the background images
+        {% for muscle in muscle_list %}
+        wgerPrefetchImages(['/static/images/muscles/main/muscle-' + {{ muscle.id }} + '.svg']);
     {% endfor %}
     wgerPrefetchImages(['/static/images/muscles/muscular_system_back.svg']);
     $('#muscle-systems').append(front_muscles);
@@ -23,7 +23,7 @@ $(document).ready(function() {
     // Hightlight the first element
     wgerHighlightMuscle($('.muscle').first());
     // Highlight on hover
-    $('.muscle').hover(function(e) {
+    $('.muscle').hover(function (e) {
         e.preventDefault();
         wgerHighlightMuscle(this);
         //load front muscles if front
@@ -88,45 +88,42 @@ $(document).ready(function() {
 
     <div class="col-sm-4 col-xs-6">
         {# Why do we need to use |first? #}
-        {% regroup muscle_list|first by is_front as muscle_group %}
+        {% regroup muscle_list by is_front as muscle_group %}
         {% for group in muscle_group %}
-            {% if group.grouper %}
-                <h4>{% trans "Front side" %}</h4>
-            {% else %}
-                <h4>{% trans "Back side" %}</h4>
-            {% endif %}
+        {% if group.grouper %}
+        <h4>{% trans "Front side" %}</h4>
+        {% else %}
+        <h4>{% trans "Back side" %}</h4>
+        {% endif %}
 
-            <ul class="muscle-list">
+        <ul class="muscle-list">
             {% for muscle in group.list %}
-            <li class="muscle"
-                data-target="muscle-{{muscle.id}}"
-                data-is-front="{{muscle.is_front}}"
-                data-name="{{muscle.name}}"
-                itemscope itemtype="http://schema.org/Muscle">
+            <li class="muscle" data-target="muscle-{{muscle.id}}" data-is-front="{{muscle.is_front}}"
+                data-name="{{muscle.name}}" itemscope itemtype="http://schema.org/Muscle">
                 <span itemprop="name">{{muscle.name}}</span>
             </li>
             {% endfor %}
-            </ul>
+        </ul>
         {% endfor %}
     </div>
     <div class="col-sm-4 col-xs-12">
-        {% for muscle in muscle_list|first %}
-            <div id="muscle-{{muscle.id}}" style="display:none;" class="exercise-list">
-                <h4>{% trans "Exercises" %}</h4>
-                <ul class="exercise-overview">
-                    {% for exercise in muscle.exercise_set.select_related %}
-                    {% if exercise.language in active_languages %}
-                    <li class="exercise">
-                        <a href="{{exercise.get_absolute_url}}">{{exercise}}</a>
-                    </li>
-                    {% endif %}
-                    {% empty %}
-                    <li>
-                        <em>{% trans "No exercises that mainly train this muscle" %}</em>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+        {% for muscle in muscle_list %}
+        <div id="muscle-{{muscle.id}}" style="display:none;" class="exercise-list">
+            <h4>{% trans "Exercises" %}</h4>
+            <ul class="exercise-overview">
+                {% for exercise in muscle.exercise_set.select_related %}
+                {% if exercise.language in active_languages %}
+                <li class="exercise">
+                    <a href="{{exercise.get_absolute_url}}">{{exercise}}</a>
+                </li>
+                {% endif %}
+                {% empty %}
+                <li>
+                    <em>{% trans "No exercises that mainly train this muscle" %}</em>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         {% endfor %}
     </div>
 </div>
