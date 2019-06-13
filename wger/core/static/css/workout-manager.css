@@ -41,7 +41,17 @@
 a img{
     vertical-align: middle;
 }
+#svg-front{
+    display: block;
+    transform: translate(-25px, -48px)scale(0.75);
+    opacity: 0;
 
+}
+#svg-back{
+    display: none;
+    transform: translate(-25px, -46px)scale(0.75);
+    opacity: 0;
+}
 /*
  * "invisible" elements, simply hidden (they still take all the space)
  */
