@@ -146,8 +146,22 @@ class BaseTestCase(object):
         # Clear MEDIA_ROOT folder
         shutil.rmtree(self.media_root)
 
+    def get_reverse(self, url, kwargs={}):
+        '''
+        Helper function to get the reverse URL
+        '''
+        try:
+            url = reverse(url, kwargs=kwargs)
+        except NoReverseMatch:
+            # URL needs special care and doesn't need to be reversed here,
+            # everything was already done in the individual test case
+            url = url
+
+        return six.text_type(url)
+
 
 class WorkoutManagerTestCase(BaseTestCase, TestCase):
+
     '''
     Testcase to use with the regular website
     '''
@@ -163,6 +177,9 @@ class WorkoutManagerTestCase(BaseTestCase, TestCase):
     A list of users to test for failure. For convenience, a string can be used
     as well if there is only one user.
     '''
+
+    def setUp(self):
+        super().setUp()
 
     def user_login(self, user='admin'):
         '''

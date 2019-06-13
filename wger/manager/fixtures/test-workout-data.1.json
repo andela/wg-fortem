@@ -30,6 +30,36 @@
         }
     },
     {
+        "pk": 4,
+        "model": "manager.workout",
+        "fields": {
+            "comment": "A test workout",
+            "cycle_type": "Microcycle",
+            "user": 2,
+            "creation_date": "2012-11-01"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "manager.workout",
+        "fields": {
+            "comment": "A test workout",
+            "cycle_type": "Mesocycle",
+            "user": 2,
+            "creation_date": "2012-11-01"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "manager.workout",
+        "fields": {
+            "comment": "A test workout",
+            "cycle_type": "Mesocycle",
+            "user": 2,
+            "creation_date": "2012-11-01"
+        }
+    },
+    {
         "pk": 1,
         "model": "manager.day",
         "fields": {
@@ -66,7 +96,7 @@
         "pk": 4,
         "model": "manager.day",
         "fields": {
-            "training": 1,
+            "training": 5,
             "description": "Test day 2",
             "day": [
                 5
@@ -78,6 +108,18 @@
         "model": "manager.day",
         "fields": {
             "training": 3,
+            "description": "A cool day",
+            "day": [
+                5,
+                3
+            ]
+        }
+    },
+    {
+        "pk": 6,
+        "model": "manager.day",
+        "fields": {
+            "training": 4,
             "description": "A cool day",
             "day": [
                 5,

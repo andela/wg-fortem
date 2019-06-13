@@ -1,51 +1,202 @@
 [
     {
-        "pk": 1, 
-        "model": "core.daysofweek", 
+        "pk": 1,
+        "model": "core.daysofweek",
         "fields": {
-            "day_of_week": "Monday"
+            "day_of_week": "Monday",
+            "workout_plan": "day"
         }
-    }, 
+    },
     {
-        "pk": 2, 
-        "model": "core.daysofweek", 
+        "pk": 2,
+        "model": "core.daysofweek",
         "fields": {
-            "day_of_week": "Tuesday"
+            "day_of_week": "Tuesday",
+            "workout_plan": "day"
         }
-    }, 
+    },
     {
-        "pk": 3, 
-        "model": "core.daysofweek", 
+        "pk": 3,
+        "model": "core.daysofweek",
         "fields": {
-            "day_of_week": "Wednesday"
+            "day_of_week": "Wednesday",
+            "workout_plan": "day"
         }
-    }, 
+    },
     {
-        "pk": 4, 
-        "model": "core.daysofweek", 
+        "pk": 4,
+        "model": "core.daysofweek",
         "fields": {
-            "day_of_week": "Thursday"
+            "day_of_week": "Thursday",
+            "workout_plan": "day"
         }
-    }, 
+    },
     {
-        "pk": 5, 
-        "model": "core.daysofweek", 
+        "pk": 5,
+        "model": "core.daysofweek",
         "fields": {
-            "day_of_week": "Friday"
+            "day_of_week": "Friday",
+            "workout_plan": "day"
         }
-    }, 
+    },
     {
-        "pk": 6, 
-        "model": "core.daysofweek", 
+        "pk": 6,
+        "model": "core.daysofweek",
         "fields": {
-            "day_of_week": "Saturday"
+            "day_of_week": "Saturday",
+            "workout_plan": "day"
         }
-    }, 
+    },
     {
-        "pk": 7, 
-        "model": "core.daysofweek", 
+        "pk": 7,
+        "model": "core.daysofweek",
         "fields": {
-            "day_of_week": "Sunday"
+            "day_of_week": "Sunday",
+            "workout_plan": "day"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "Week 1",
+            "workout_plan": "week"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "Week 2",
+            "workout_plan": "week"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "Week 3",
+            "workout_plan": "week"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "Week 4",
+            "workout_plan": "week"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "Week 5",
+            "workout_plan": "week"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "Week 6",
+            "workout_plan": "week"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "January",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "February",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "March",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "April",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "May",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "June",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "July",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "August",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "September",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "October",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "November",
+            "workout_plan": "Month"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "core.daysofweek",
+        "fields": {
+            "day_of_week": "December",
+            "workout_plan": "Month"
         }
     }
 ]
