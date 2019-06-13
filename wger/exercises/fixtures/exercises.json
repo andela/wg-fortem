@@ -523,7 +523,8 @@
             "category": 8,
             "uuid": "2e3fa138-3894-4f61-959a-d8966804a1a3",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Bizeps LH-Curls"
@@ -569,7 +570,8 @@
             "category": 8,
             "uuid": "8cbbffcc-1989-43de-9200-03869480398c",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Bizeps KH-Curls"
@@ -952,7 +954,8 @@
             "category": 8,
             "uuid": "8277124a-9ef2-442a-9824-7ab4439a5f1f",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Bizeps Curls mit \u00df-Stange "
@@ -998,7 +1001,8 @@
             "category": 8,
             "uuid": "ff454f5a-70ee-40fb-9200-5e7e42960ef0",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Hammercurls"
@@ -1590,7 +1594,8 @@
             "category": 8,
             "uuid": "c56078d2-ae85-4524-a467-d1e143b6df1a",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Biceps curls with barbell"
@@ -1687,7 +1692,8 @@
             "category": 8,
             "uuid": "38919515-ce04-4383-9c3f-5846edd0e844",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Biceps curls with SZ-bar"
@@ -1711,7 +1717,8 @@
             "category": 8,
             "uuid": "48a59aa8-4568-409c-8afe-f8cb99c558ea",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Biceps curls with dumbbell"
@@ -1824,7 +1831,8 @@
             "category": 8,
             "uuid": "6dcc9adb-939c-4581-9e44-d0d73753997b",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Hammercurls"
@@ -2709,7 +2717,8 @@
             "category": 8,
             "uuid": "8c6c1544-cbf8-403c-ae12-b27b392702f8",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Biceps curl with cable"
@@ -2880,7 +2889,8 @@
             "category": 8,
             "uuid": "5baf40e5-ea3c-4f8d-b60a-d294ee2de55b",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Hammercurls on cable"
@@ -3099,7 +3109,9 @@
             "category": 13,
             "uuid": "5345766a-c092-457a-aa21-8ee6ffa855d4",
             "muscles": [
-                2
+                2,
+                17,
+                19
             ],
             "license": 1,
             "name": "Lateral raises"
@@ -3119,7 +3131,9 @@
             "category": 13,
             "uuid": "79a3a34c-262f-4cae-b827-b5a85b11b860",
             "muscles": [
-                2
+                2,
+                17,
+                19
             ],
             "license": 1,
             "name": "Lateral raises on cable, one armed"
@@ -3268,7 +3282,9 @@
             "category": 12,
             "uuid": "079c2147-1030-4c7d-9cb5-e4f17e7768c8",
             "muscles": [
-                2
+                2,
+                17,
+                19
             ],
             "license": 1,
             "name": "Chin ups"
@@ -3975,7 +3991,8 @@
             "category": 10,
             "uuid": "e7fdd8fb-5e07-4a29-9d56-a005338b2e19",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Overhand Cable Curl"
@@ -4134,7 +4151,8 @@
             "category": 8,
             "uuid": "83e079a9-b61c-413b-b055-f9cf515904f1",
             "muscles": [
-                1
+                1,
+                20
             ],
             "license": 1,
             "name": "Single-arm preacher curl"
@@ -4590,7 +4608,10 @@
             "creation_date": "2014-03-09",
             "category": 13,
             "uuid": "53ca25b3-61d9-4f72-bfdb-492b83484ff5",
-            "muscles": [],
+            "muscles": [
+                17,
+                19
+            ],
             "license": 1,
             "name": "Arnold Shoulder Press"
         },
@@ -4731,7 +4752,9 @@
             "category": 13,
             "uuid": "a87de062-2101-4dc4-adda-328b4c722c6d",
             "muscles": [
-                2
+                2,
+                17,
+                19
             ],
             "license": 1,
             "name": "Front raises"
@@ -4790,7 +4813,7 @@
             "creation_date": "2014-03-30",
             "category": 13,
             "uuid": "69f271a6-5408-49d9-8a3a-1f6088835f30",
-            "muscles": [],
+            "muscles": [19],
             "license": 1,
             "name": "Rear Delt Raises"
         },
@@ -6112,7 +6135,8 @@
             "uuid": "aba7ba7a-6ff0-47d4-ab66-8952e21e38c5",
             "muscles": [
                 2,
-                9
+                9,
+                17
             ],
             "license": 2,
             "name": "Lateral-to-Front Raises"
