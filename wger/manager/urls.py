@@ -27,7 +27,8 @@ from wger.manager.views import (
     log,
     set,
     day,
-    workout_session
+    workout_session,
+    json
 )
 
 app_name = "manager"
@@ -113,6 +114,11 @@ patterns_workout = [
     path('<day_pk>/timer',
          workout.timer,
          name='timer'),
+    path('<id>/json/<uidb64>/<token>',
+         json.export_workout,
+         name='export-workout'),
+    path('json/import',
+         json.Importworkout.as_view(), name='import-workout')
 ]
 
 
