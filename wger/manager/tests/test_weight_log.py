@@ -160,7 +160,7 @@ class WeightLogOverviewAddTestCase(WorkoutManagerTestCase):
     Tests the weight log functionality
     '''
 
-    def add_weight_log(self, fail=True):
+    def add_weight_log(self, fail=True, rel=False):
         '''
         Helper function to test adding weight log entries
         '''
@@ -210,6 +210,8 @@ class WeightLogOverviewAddTestCase(WorkoutManagerTestCase):
         else:
             self.assertEqual(response.status_code, 302)
             self.assertGreater(count_after, count_before)
+        if fail is False and rel is True:
+            self.assertTrue(isinstance(WorkoutLog.objects.all()[0].session.id, int))
 
     def test_add_weight_log_anonymous(self):
         '''
@@ -217,6 +219,13 @@ class WeightLogOverviewAddTestCase(WorkoutManagerTestCase):
         '''
 
         self.add_weight_log(fail=True)
+
+    def test_add_weight_log_relation(self):
+        '''
+        Tests workoutlog and workoutsession table relationships
+        '''
+        self.user_login('admin')
+        self.add_weight_log(fail=False, rel=True)
 
     def test_add_weight_log_owner(self):
         '''

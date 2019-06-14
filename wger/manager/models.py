@@ -718,6 +718,11 @@ class WorkoutLog(models.Model):
     '''
 
     date = Html5DateField(verbose_name=_('Date'))
+    '''
+    This is the session the log belongs to
+    '''
+    session = models.ForeignKey('WorkoutSession',
+                                null=True, blank=True, to_field='id', on_delete=models.CASCADE)
 
     # Metaclass to set some other properties
     class Meta:
