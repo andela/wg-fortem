@@ -280,6 +280,9 @@ function modalDialogFormEdit() {
           console.log('No X-wger-redirect found but also no .has-error!');
           $('#wger-ajax-info').modal('hide');
           $form.html(data);
+          setTimeout(function () {
+            location.reload();
+          }, 100);
         }
 
         // Call other custom initialisation functions
@@ -523,6 +526,48 @@ function wgerInitEditSet() {
   $('#id_sets').on('change', function () {
     updateAllExerciseFormset();
     $('#id_sets_value').html($('#id_sets').val());
+  });
+  $('#checkbox-id').click(function () {
+    var dropsetForm = $('.dropset-items');
+    if ($('#dropset-checkbox')[0].checked) {
+      dropsetForm.css('display', 'block');
+    } else {
+      dropsetForm.css('display', 'none');
+    }
+  });
+
+  $('#calculate-dropset').click(function () {
+    var i;
+    var repId;
+    var weightId;
+    var weightUnitId;
+    var repUnitId;
+    var id = $('input.form-control')[6].id;
+    var exerciseNo = id.replace(/^\D+|\D.*$/g, '');
+    var sets = $('#id_sets').val();
+    var weight = $('#dropset-weight').val();
+    var weightUnit = $('#dropset-weight-unit').val();
+    var percentageDrop = $('#percentage-drop').val();
+    var repPercentage = $('#rep-percentage-drop').val();
+    var repUnit = $('#rep-dropset-unit').val();
+    var startRep = $('#rep-dropset-weight').val();
+
+    if (sets) {
+      for (i = 0; i <= sets; i += 1) {
+        startRep = parseFloat(startRep);
+        weight = Math.abs(parseFloat(weight));
+        repId = 'id_exercise' + exerciseNo + '-' + i + '-reps';
+        repUnitId = 'id_exercise' + exerciseNo + '-' + i + '-repetition_unit';
+        weightId = 'id_exercise' + exerciseNo + '-' + i + '-weight';
+        weightUnitId = 'id_exercise' + exerciseNo + '-' + i + '-weight_unit';
+        $('#' + repId).val(startRep.toFixed(0));
+        $('#' + weightId).val(weight.toFixed(0));
+        $('#' + repUnitId).val(repUnit);
+        $('#' + weightUnitId).val(weightUnit);
+        startRep += startRep * (parseFloat(repPercentage) / 100);
+        weight -= weight * (parseFloat(percentageDrop) / 100);
+      }
+    }
   });
 
   /*
