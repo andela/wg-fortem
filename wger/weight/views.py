@@ -41,6 +41,7 @@ from wger.weight.models import WeightEntry
 from wger.weight import helpers
 from wger.utils.helpers import check_access
 from wger.utils.generic_views import WgerFormMixin
+from django.contrib.auth.models import User
 
 
 logger = logging.getLogger(__name__)
@@ -160,13 +161,12 @@ def overview(request, username=None):
     return render(request, 'overview.html', template_data)
 
 
-@api_view(['GET'])
-def get_weight_data(request, username=None):
-    '''
-    Process the data to pass it to the JS libraries to generate an SVG image
-    '''
+def return_chart_data(request, username=None, action="get"):
 
-    is_owner, user = check_access(request.user, username)
+    if action == "get":
+        is_owner, user = check_access(request.user, username)
+    else:
+        user = User.objects.get(username=username)
 
     date_min = request.GET.get('date_min', False)
     date_max = request.GET.get('date_max', True)
@@ -185,6 +185,23 @@ def get_weight_data(request, username=None):
 
     # Return the results to the client
     return Response(chart_data)
+
+
+@api_view(['GET'])
+def get_weight_data(request, username=None):
+    '''
+    Process the data to pass it to the JS libraries to generate an SVG image
+    '''
+    return return_chart_data(request, username, "get")
+
+
+@api_view(['GET'])
+def compare_weight_data(request, username=None):
+    '''
+    Process the data to pass it to the JS libraries to generate an SVG image
+    '''
+
+    return return_chart_data(request, username, "compare")
 
 
 class WeightCsvImportFormPreview(FormPreview):
