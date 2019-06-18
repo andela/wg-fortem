@@ -512,6 +512,8 @@ class DaysOfWeek(models.Model):
     day_of_week = models.CharField(max_length=9,
                                    verbose_name=_('Day of the week'))
 
+    workout_plan = models.CharField(max_length=5, null=True)
+
     class Meta:
         '''
         Order by day-ID, this is needed for some DBs

@@ -53,6 +53,12 @@ class Workout(models.Model):
     Model for a training schedule
     '''
 
+    CYCLE_OPTIONS = [
+        ('Microcycle', 'Microcycle - one week plan'),
+        ('Mesocycle', 'Mesocycle - Two to six weeks plan'),
+        ('Macrocycle', 'Macrocycle - one year plan')
+    ]
+
     class Meta:
         '''
         Meta class to set some other properties
@@ -66,6 +72,8 @@ class Workout(models.Model):
                                help_text=_("A short description or goal of the workout. For "
                                            "example 'Focus on back' or 'Week 1 of program xy'."))
     user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.CASCADE)
+
+    cycle_type = models.CharField(max_length=10, choices=CYCLE_OPTIONS, default='')
 
     def get_absolute_url(self):
         '''

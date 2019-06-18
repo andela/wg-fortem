@@ -199,15 +199,47 @@ class DayTestCase(WorkoutManagerTestCase):
         day = Day.objects.get(pk=3)
         self.assertEqual(day.get_first_day_id, 1)
 
+    def test_day_context_base_on_workout_cycle_type_edit(self):
+        """ Test context details based on workout cycle types"""
 
-# class DayApiTestCase(api_base_test.ApiBaseResourceTestCase):
-#     '''
-#     Tests the day API resource
-#     '''
-#     pk = 5
-#     resource = Day
-#     private_resource = True
-#     data = {"training": 3,
-#             "description": "API update",
-#             "day": [1, 4]
-#             }
+        # object_class = Day
+        url = 'manager:day:edit'
+        self.user_login(user="admin")
+
+        # test Microcycle
+        response = self.client.get(reverse(url, kwargs={'pk': 4}))
+        self.assertEqual(response.status_code, 200)
+
+        # test Mesocyle Workout session
+        response = self.client.get(reverse(url, kwargs={'pk': 3}))
+        self.assertEqual(response.status_code, 200)
+        self.user_login(user="test")
+        # test Macrocycle Workout session
+        response = self.client.get(reverse(url, kwargs={'pk': 5}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_add_workout_day_microcycle_mesocycle(self):
+        url = 'manager:day:add'
+
+        self.user_login(user="admin")
+        response = self.client.get(reverse(url, kwargs={'workout_pk': 1}))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse(url, kwargs={'workout_pk': 2}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_valid_day_add_url(self):
+
+        url = 'manager:day:add'
+
+        self.user_login(user="admin")
+        response = self.client.get(self.get_reverse(url, kwargs={'workout_pk': 1}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_invalid_day_add_url(self):
+
+        url = 'manager:day:adds'
+
+        self.user_login(user="admin")
+        response = self.client.get(self.get_reverse(url, kwargs={'workout_pk': 1}))
+        self.assertEqual(response.status_code, 404)
