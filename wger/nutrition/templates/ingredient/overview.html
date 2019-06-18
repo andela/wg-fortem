@@ -70,6 +70,19 @@
                placeholder="{% trans 'ingredient name' %}"
                style="width:100%;">
     </form>
+
+    <br/>
+    <h4> {% trans "Select language" %}</h4>
+        <button id="filter-language" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+            {% trans "Choose Language" %}
+        </button>
+        <ul class="dropdown-menu" role="menu" style="float:right;">
+            <li><a href={% url 'nutrition:ingredient:list' %}>{% trans "Default" %}</a></li>
+
+            {% for  short_name, long_name in languages %}
+            <li><a href={% url 'nutrition:ingredient:list' %}?language={{ short_name }}>{% trans long_name %}</a></li>
+            {% endfor %}
+        </ul>
 {% endblock %}
 
 
