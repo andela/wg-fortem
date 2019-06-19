@@ -37,6 +37,7 @@ from wger.core.views import (
 )
 from wger.core.forms import (
     UserLoginForm)
+from wger.core.views import fitbit_client
 
 app_name = "core"
 # sub patterns for languages
@@ -183,7 +184,12 @@ patterns_weight_units = [
          name='delete'),
 ]
 
+patterns_fitbit = [
+    path('auth', fitbit_client.fitbit_authorize, name='fitbit_auth'),
+    path('token', fitbit_client.fitbit_get_token, name='fitbit_token'),
+    path('weight', fitbit_client.fitbit_get_weight, name='fitbit_weight'),
 
+]
 #
 # Actual patterns
 #
@@ -219,4 +225,7 @@ urlpatterns = [
                                       "core"), namespace="repetition-unit")),
     path('weight-unit/',
          include((patterns_weight_units, "core"), namespace="weight-unit")),
+    path('fitbit/', include((patterns_fitbit, "core"), namespace='fitbit')),
+
+
 ]
