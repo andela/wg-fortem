@@ -513,6 +513,21 @@ class WorkoutCacheTestCase(WorkoutManagerTestCase):
             self.assertFalse(cache.get(cache_mapper.get_workout_canonical(workout_id)))
 
 
+class ExerciseLanguageTestCase(WorkoutManagerTestCase):
+    '''
+        Tests that correct language is loaded.
+    '''
+
+    def test_exercise_language(self):
+        '''
+        Tests language of the exercise
+        '''
+        url = reverse('exercise:exercise:overview') + '?language=de'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['active_tab'], 'exercises')
+
+
 # TODO: fix test, all registered users can upload exercises
 # class ExerciseApiTestCase(api_base_test.ApiBaseResourceTestCase):
 #     '''

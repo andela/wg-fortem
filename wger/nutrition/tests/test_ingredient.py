@@ -347,6 +347,21 @@ class IngredientTestCase(WorkoutManagerTestCase):
         self.assertRaises(ValidationError, ingredient.full_clean)
 
 
+class IngredientLanguageTestCase(WorkoutManagerTestCase):
+    '''
+        Tests ingredients are loaded with right language.
+    '''
+
+    def test_ingredients_language(self):
+        '''
+        Tests language of the ingredients
+        '''
+        url = reverse('nutrition:ingredient:list') + '?language=de'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['active_tab'], 'nutrition')
+
+
 class IngredientApiTestCase(api_base_test.ApiBaseResourceTestCase):
     '''
     Tests the ingredient API resource

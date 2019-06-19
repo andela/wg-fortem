@@ -33,6 +33,7 @@ from django.views.generic import (
 
 from wger.nutrition.forms import UnitChooserForm
 from wger.nutrition.models import Ingredient
+from wger.core.models import Language
 from wger.utils.generic_views import (
     WgerFormMixin,
     WgerDeleteMixin
@@ -64,7 +65,21 @@ class IngredientListView(ListView):
         (the user can also want to see ingredients in English, in addition to his
         native language, see load_ingredient_languages)
         '''
+        # get default language.
         languages = load_ingredient_languages(self.request)
+
+        # let user select a language they want to view in.
+        selected_language = self.request.GET.get('language', None)
+        language = None
+
+        if selected_language:
+            language = Language.objects.filter(short_name=selected_language).first().id
+
+            # Load selected language
+            return Ingredient.objects.filter(language=language) \
+                .filter(status__in=Ingredient.INGREDIENT_STATUS_OK).only('id', 'name')
+
+        # loads the default language if no language is selected.
         return (Ingredient.objects.filter(language__in=languages)
                                   .filter(status__in=Ingredient.INGREDIENT_STATUS_OK)
                                   .only('id', 'name'))
